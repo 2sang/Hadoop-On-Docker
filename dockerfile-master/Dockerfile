@@ -4,17 +4,18 @@ FROM ubuntu:16.04
 RUN apt-get update && apt-get -y install openjdk-8-jdk
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
+# VIM - only for temporarly debugging
+RUN apt-get -y install vim
+
 # openssh-server
-RUN apt-get -y install openssh-server
+RUN apt-get -y install openssh-server && apt-get -y install sshpass
 RUN mkdir /var/run/sshd
 RUN echo 'root:root' | chpasswd
+RUN echo 'root' >> /password.txt
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
-
-# iputils-ping
-RUN apt-get -y install iputils-ping
 
 # Hadoop
 ENV HADOOP_VERSION 2.8.0
@@ -31,9 +32,11 @@ RUN tar -zxvf /hadoop-$HADOOP_VERSION.tar.gz && \
     mv hadoop-$HADOOP_VERSION /usr/local/hadoop && \
     mkdir -p /usr/local/hadoop/logs
 
+# Custom copy
 COPY conf $HADOOP_HOME/etc/hadoop/
 COPY bashrc-sub /etc/profile
-COPY 4300.txt ~
+COPY 4300.txt $HADOOP_HOME
+COPY init.sh /init.sh
 
 # When IP issue was solved
 # RUN $HADOOP_HOME/bin/hdfs namenode -format 
