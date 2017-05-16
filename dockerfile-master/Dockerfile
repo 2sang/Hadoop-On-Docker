@@ -32,6 +32,7 @@ RUN tar -zxvf /hadoop-$HADOOP_VERSION.tar.gz && \
     mkdir -p /usr/local/hadoop/logs
 
 COPY conf $HADOOP_HOME/etc/hadoop/
+COPY bashrc-sub /etc/profile
 COPY 4300.txt ~
 
 # When IP issue was solved
