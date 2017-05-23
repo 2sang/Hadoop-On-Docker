@@ -37,6 +37,8 @@ COPY conf $HADOOP_HOME/etc/hadoop/
 COPY bashrc-sub /etc/profile
 COPY 4300.txt $HADOOP_HOME
 COPY init.sh /init.sh
+COPY wordcount.sh /wordcount.sh
+COPY custom-wc /custom-wc
 
 # When IP issue was solved
 # RUN $HADOOP_HOME/bin/hdfs namenode -format 
