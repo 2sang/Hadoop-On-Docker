@@ -117,7 +117,7 @@ if ! shopt -oq posix; then
 fi
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 export HADOOP_HOME=/usr/local/hadoop
+export HIVE_HOME=/usr/local/hive
 export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 export PATH="$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin"
-
-source ~/.bashrc
+export PATH="$PATH:$HIVE_HOME/bin"

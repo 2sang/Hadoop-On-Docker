@@ -42,7 +42,7 @@ public class WordCount2 {
 		   InterruptedException {
 		       conf = context.getConfiguration();
 		       caseSensitive = conf.getBoolean("wordcount.case.sensitive", true);
-		       if (conf.getBoolean("wordcount.skip.patterns", true)) {
+		       if (conf.getBoolean("wordcount.skip.patterns", false)) {
 			   URI[] patternsURIs = Job.getInstance(conf).getCacheFiles();
 			   for (URI patternsURI : patternsURIs) {
 			       Path patternsPath = new Path(patternsURI.getPath());
@@ -104,7 +104,7 @@ public class WordCount2 {
 	Configuration conf = new Configuration();
 	GenericOptionsParser optionParser = new GenericOptionsParser(conf, args);
 	String[] remainingArgs = optionParser.getRemainingArgs();
-	if (!(remainingArgs.length != 2 | | remainingArgs.length != 4)) {
+	if (!(remainingArgs.length != 2 || remainingArgs.length != 4)) {
 	    System.err.println("Usage: wordcount <in> <out> [-skip skipPatternFile]");
 	    System.exit(2);
 	}
